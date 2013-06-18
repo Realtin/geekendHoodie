@@ -1,15 +1,15 @@
 {
-  "name": "{{hoodie_appname}}",
+  "name": "geekend2",
   "version": "1.0.0",
   "type": "app",
   "dependencies": {
     "hoodie-app": "git://github.com/hoodiehq/hoodie-app.git",
     "hoodie-worker-users": "git://github.com/hoodiehq/worker-users.git"
   },
-  "subdomain": "hoodie-{{hoodie_appname}}",
+  "subdomain": "hoodie-geekend2",
   "domains": [
-    "admin.hoodie-{{hoodie_appname}}.jit.su",
-    "couch.hoodie-{{hoodie_appname}}.jit.su"
+    "admin.hoodie-geekend2.jit.su",
+    "couch.hoodie-geekend2.jit.su"
   ],
   "scripts": {
     "start": "node node_modules/hoodie-app/bin/start"
