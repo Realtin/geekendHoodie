@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="js/vendor/jquery-1.9.1.js"></script>
     <script src="js/vendor/bootstrap.js"></script>
     <script src="js/vendor/hoodie.js"></script>
@@ -25,7 +26,7 @@
       <div class="hero-unit">
         <h1>Geekend</h1>
         <p>
-          geeky Events in deiner Nähe!
+         Finde all die geeky Events in deiner Nähe!
         </p>
 
         <div class="hoodie-accountbar">
@@ -93,6 +94,10 @@ hoodie.store.add('events', {name: iOS Workshop});
 */
 		var lat;
 		var lon;
+		var foto='';
+		var topic1='';
+		var topic2='';
+		var topic3='';
 		if (hoodie.account.username !== undefined){
 		hoodie.store.findAll("latlong").done(function (object) {$.each(object,function(i,item){
 			lat=item.lat;
@@ -108,33 +113,84 @@ hoodie.store.add('events', {name: iOS Workshop});
       
       function(events) {
 		//var image ="";
-		var results = events.results;
 		var eventhtml ='';
-        $(results).each(function(i, item){
+        $(events.results).each(function(i, item){
 		//console.log(item.reading.book.cover_url);
 			var eventname = item.name;
 			var eventurl = item.event_url;
+			var eventinfo = item.description;
 			var eventlat = item.group.group_lat;
 			var eventlon = item.group.group_lon;
-			//var eventlocation = new google.maps.LatLng(eventlat,eventlon);
-				
-			//addMarker(eventlocation);
-
+			var eventurlname = item.group.urlname;
+			var groupid =item.group.id;
+			var groupinfo ='';
 			
-			eventhtml += '<li><a href="'+eventurl+'">'+eventname+'</a></li>';
+			var eventlocation = new google.maps.LatLng(eventlat, eventlon);
+			
+			$.getJSON("http://api.meetup.com/2/groups?key=2704e3730586715d386564b67296c&&sign=true&group_id="+groupid+"&callback=?",
+			function(getgroupinfo){
+				topic1 = getgroupinfo.results[0].topics[0].name;
+				topic2 = getgroupinfo.results[0].topics[1].name;
+				topic3 = getgroupinfo.results[0].topics[2].name;
+				var description = getgroupinfo.results[0].description;
+				foto = getgroupinfo.results[0].group_photo.thumb_link;
+				var rating = getgroupinfo.results[0].rating;
+				
+				var groupinfo = getgroupinfo.results[0].description;
+				console.log(getgroupinfo.results[0]);
+				console.log(topic1);
+				
+				eventhtml += '<p><h4><li>'+eventname+'</h4><br><small>'+description+'</small><br><i class="icon-tags"> </i> '+topic1+', '+topic2+', '+topic3+' <br><i class="icon-share"></i> <a href="'+eventurl+'">'+eventurlname+'</a></li><br><br></p>'
+				
+				$("#events").html(eventhtml);
+				
+				var marker = new google.maps.Marker({
+					position: eventlocation,
+					map: map,
+					title: eventname
+  });
+
+			});
+			
+			
+			//addMarker(eventlocation);
+			 
+			
+			/*
+$("#"+eventurlname+"").popover({title: ''+eventname+'', content: ''+eventinfo+'', html: true});  
+			eventhtml += '<li><a href="#" id="'+eventurlname+'" rel="popover">'+eventname+'</a></li>';
+*/
+
+
+			/*
+eventhtml += '<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#events" href="#'+eventurlname+'">
+								'+eventname+'
+        						</a>
+    
+        					</div>
+        					<div id="'+eventurlname+'" class="accordion-body collapse in">
+        					<div class="accordion-inner">
+        						'+eventinfo+'
+        					</div>
+        					</div>
+        				</div>'
+*/
 			
 			/* image += '<li class="span9"><a href="#" class="thumbnail"><img id=' + buch_id + ' src=" ' + item.reading.book.cover_url + '"/></a></li>'; */
 		//console.log(item.reading.id);
 		//console.log(item.reading.highlights_count);
-			$("#events").html(eventhtml); 
+			
+			$("#eventinfo").popover({title: ''+eventname+'', content: ''+eventinfo+'',html: true});  
+			  
 			
 			
 			});	
 		});
   		</script>
 		
-		<p>Events in deiner Nähe: </p>
-		<div id="events">
+		<div class="events" id="events">
 		<h3 align="center">Bitte log dich ein! oder erstelle einen Account um Events abrufen zu können.</h3>
   
 		</div>
