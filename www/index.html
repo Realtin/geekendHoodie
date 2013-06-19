@@ -93,6 +93,7 @@ hoodie.store.add('events', {name: iOS Workshop});
 */
 		var lat;
 		var lon;
+		if (hoodie.account.username !== undefined){
 		hoodie.store.findAll("latlong").done(function (object) {$.each(object,function(i,item){
 			lat=item.lat;
 			lon=item.long;
@@ -100,6 +101,7 @@ hoodie.store.add('events', {name: iOS Workshop});
 		
 		
 		)});
+		}
   	
    
 			$.getJSON("http://api.meetup.com/2/open_events/?key=2704e3730586715d386564b67296c&topic=newtech&lat="+lat+"&lon="+lon+"&callback=?",
@@ -133,7 +135,7 @@ hoodie.store.add('events', {name: iOS Workshop});
 		
 		<p>Events in deiner Nähe: </p>
 		<div id="events">
-		<h3>Bitte log dich ein! oder erstelle einen Account um Events abrufenzukönnen.</h3>
+		<h3 align="center">Bitte log dich ein! oder erstelle einen Account um Events abrufen zu können.</h3>
   
 		</div>
        	</div>
@@ -142,7 +144,7 @@ hoodie.store.add('events', {name: iOS Workshop});
       </div>
 
       <footer class="copy">
-        <p>&hearts; hood.ie 2013</p>
+        <p>&hearts; Jule+Alex 2013</p>
       </footer>
     </div> <!-- /.container -->
 
