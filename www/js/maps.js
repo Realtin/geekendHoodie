@@ -29,6 +29,8 @@ var map=new google.maps.Map(document.getElementById("googleMap")
     navigator.geolocation.getCurrentPosition(function(position) {
       var myLatlng = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
+                              
+      var eventlocation='';
       
       // Lat Long des Users in Datenbank speichern
       
@@ -37,6 +39,7 @@ var map=new google.maps.Map(document.getElementById("googleMap")
       
       map.setCenter(myLatlng);
       addMarker(myLatlng);
+      
       
 
     }, function() {
@@ -59,11 +62,23 @@ var map=new google.maps.Map(document.getElementById("googleMap")
     //markersArray.push(marker);
     }
     
+ /*
+   hoodie.store.findAll("events").done(function (object) {$.each(object,function(i,item){
+			eventlocation = new google.maps.LatLng(item.lat,
+                                       item.lon);
+            addMarker(eventlocation);
+            })});
+*/
     
 
 }
 
 
+			
+		}
+		
+		
+		)});
 
 google.maps.event.addDomListener(window, 'load', initialize);
 

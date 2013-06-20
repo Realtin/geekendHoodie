@@ -124,6 +124,9 @@ hoodie.store.add('events', {name: iOS Workshop});
 			var eventurlname = item.group.urlname;
 			var groupid =item.group.id;
 			var groupinfo ='';
+			var zeit = item.time;
+			
+			hoodie.store.add("events", {"lat":eventlat, "lon":eventlon, "name":eventname, "groupid":groupid, "info":eventinfo, "url":eventurl, "time":zeit}).done(function (newObject) {});
 			
 			var eventlocation = new google.maps.LatLng(eventlat, eventlon);
 			
